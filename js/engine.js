@@ -20,25 +20,40 @@
     });
   }
 
-  /* ---- 解析下一节点（支持 nextIf 条件路由） ---- */
+  /* ---- 解析下一节点（支持 nextIf 条件路由 + "$checkpoint" 占位） ---- */
   function resolveNext(node) {
     if (node.nextIf) {
       for (let i = 0; i < node.nextIf.length; i++) {
-        if (Game.evalCondition(node.nextIf[i].if)) return node.nextIf[i].next;
+        if (Game.evalCondition(node.nextIf[i].if)) return resolveToken(node.nextIf[i].next);
       }
     }
-    return node.next || null;
+    return resolveToken(node.next);
+  }
+  /* "$checkpoint" → 当前章节起始节点（用于章节回退后的叙事节拍） */
+  function resolveToken(id) {
+    if (id === "$checkpoint") return Game.state.chapterCheckpoint || Game.firstNode;
+    return id || null;
   }
 
   /* ---- 进入节点 ---- */
   Game.go = function (id) {
+    id = resolveToken(id);
     if (!id || !Game.scenes[id]) {
       console.error("[engine] node not found:", id);
       return;
     }
     const node = Game.scenes[id];
     applyOnEnter(node);
-    Game.setState({ nodeId: id, chapter: node.chapter || Game.state.chapter });
+    const patch = { nodeId: id };
+    /* 跨章节（日）时更新检查点、重置回退计数；同章不重置 */
+    if (node.chapter && node.chapter !== Game.state.chapter) {
+      patch.chapter = node.chapter;
+      patch.chapterCheckpoint = id;
+      patch.rollbackCount = 0;
+    } else if (node.chapter) {
+      patch.chapter = node.chapter;
+    }
+    Game.setState(patch);
     Game.publish("node:enter", node);
   };
 
@@ -77,7 +92,12 @@
         Game.publish("choice:propose", c);
         Game.ui.playVerdict(c.verdictText || "准", function () {
           Game.ui.playDissolve(function () {
-            Game.triggerEnding(c.ending || "E_A");
+            /* §12：本章回退满 3 次，第 4 次强制进入残影结局 */
+            if (Game.state.rollbackCount >= 3) {
+              Game.triggerEnding("E_PHANTOM");
+            } else {
+              Game.triggerEnding(c.ending || "E_A");
+            }
           });
         });
         return; /* 结局接管后续 */
@@ -128,7 +148,9 @@
   Game.currentEnding = function () { return currentEnding; };
 
   /* ---- 结局后继续 ----
-     bad / normal / good → 轮回重启（loop++，继承 knowledge）
+     bad(E_A) → §12 章节级回退（非 loop++）：回退计数++，回到本章开头，保留情报
+     bad(E_PHANTOM) → 被循环发现，新一周目
+     normal/good → 完整循环，loop++
      true → 破局，回标题 */
   Game.continueEnding = function () {
     const e = currentEnding;
@@ -137,6 +159,20 @@
       Game.publish("ending:finish", e);
       return;
     }
+    if (e.id === "E_PHANTOM") {
+      Game.state.loop++;
+      Game.resetForLoop();
+      Game.go(Game.firstNode);
+      return;
+    }
+    if (e.type === "bad") {
+      /* 章节级回退：回退计数++（应已 <3 才到此），回到本章开头 */
+      Game.state.rollbackCount = (Game.state.rollbackCount || 0) + 1;
+      Game.resetForChapterRollback();
+      Game.go("scene_recall");
+      return;
+    }
+    /* normal / good：完整循环，loop++ */
     Game.state.loop++;
     Game.resetForLoop();
     Game.go(Game.firstNode);

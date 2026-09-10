@@ -575,6 +575,306 @@ Ink drop spreading in water, black ink diffusing into clear water, slow motion, 
 - [ ] 是否没有出现可读文字（避免 AI 文字崩坏）？
 - [ ] 是否与图 1 封面放在一起时，像同一个世界？
 
+## 11. 增量剧情：第二章 · 第二日 北境大旱
+
+> 本章接续第一章「第一日 · 休养生息」。
+> 核心事件：流民跪殿、李司农登场、第一次目睹「准」字的完整代价。
+> 玩家将第一次意识到：规则不是天殇定的，规则是天殇也无法违抗的。
+
+### 11.1 章节概览
+
+| 项目 | 内容 |
+|---|---|
+| 章节标题 | 第二日 · 北境大旱 |
+| 时间 | 天殇第二纪元历元年，正月十六 |
+| 地点 | 朝堂 → 馆驿 → 李司农官邸 → 馆驿 |
+| 新登场角色 | 李司农（第二位提议者） |
+| 核心机制 | 第一次亲眼见证「准」的代价；解锁「消散」CG |
+| 章节长度 | 约 25–35 分钟（含夜间段落） |
+| 关键抉择点 | 3 个 |
+| 可解锁情报 | 4 条 |
+| 可触发结局 | E_A（提议者死） |
+| 周目差异 | 二周目时，沈砚会提前出现，留下一句警告 |
+
+### 11.2 场景节点数据（Schema 格式）
+
+**节点 2-01 · 朝堂 · 流民入殿**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_01` |
+| chapter | 第二日 · 朝议 |
+| bg | `bg_throne_hall.webp` |
+| bgm | `bgm_tension_slow.mp3` |
+| narration | ①「正月十六。你入朝时，殿门外跪着人。」<br>②「不是官员。是流民。北境来的。」<br>③「他们不敢喊冤。只是跪着。一排。又一排。」<br>④「殿门没有关。天殇没有让人关门。」 |
+| speaker | 天殇 |
+| line | 「北境大旱。卿等，有何言？」 |
+| choices | 见下方 |
+
+选项分支：
+
+| 选项文案 | kind | 结果 |
+|---|---|---|
+| 「臣附议李司农。」 | echo | → `scene_02_03` |
+| 「臣以为，当开仓赈济。」 | propose | → E_A |
+| 「臣以为，休养生息即可。」 | echo | → `scene_02_02` |
+| （沉默） | silence | → `scene_02_02`（天殇好感 -1，阿檀好感 +1） |
+
+**节点 2-02 · 朝堂 · 李司农出列**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_02` |
+| chapter | 第二日 · 朝议 |
+| bg | `bg_throne_hall.webp` |
+| portrait | `{ center: "chara_lisi_normal.webp" }` |
+| narration | ①「殿上沉默了很久。」<br>②「然后有人出列。」<br>③「你见过他。昨日他还站在你右手边。」<br>④「今日，他的脸色比昨天白了。」 |
+| speaker | 李司农 |
+| line | 「臣，司农李元。臣以为，北境大旱，流民南下，当开仓赈济。国库虽虚，然民心不可失。」 |
+| next | `scene_02_03` |
+
+**节点 2-03 · 朝堂 · 「准」**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_03` |
+| chapter | 第二日 · 朝议 |
+| bg | `bg_throne_hall.webp` |
+| portrait | `{ left: "chara_tianshang_calm.webp", center: "chara_lisi_normal.webp" }` |
+| narration | ①「天殇看着他。」<br>②「看了很久。」<br>③「久到你以为他会说『不准』。」 |
+| speaker | 天殇 |
+| line | 「准。」 |
+| autoDelay | 2200 |
+| onEnter | `["flag:watched_lisi_dissolve"]` |
+| next | `scene_02_04` |
+
+**节点 2-04 · 消散 CG**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_04` |
+| chapter | 第二日 · 朝议 |
+| bg | `cg_minister_dissolve.webp` |
+| narration | ①「李司农还站着。」<br>②「但他的脚踝已经不见了。」<br>③「他还在说话。他说，谢陛下。」<br>④「他的声音越来越轻。最后，只剩下纸灰。」<br>⑤「殿上没有人抬头。没有人说话。」 |
+| autoDelay | 3200 |
+| onEnter | `["knowledge:knows_price", "flag:saw_dissolve"]` |
+| next | `scene_02_05` |
+
+**节点 2-05 · 朝堂 · 天殇的疲惫**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_05` |
+| chapter | 第二日 · 朝议 |
+| bg | `bg_throne_hall.webp` |
+| portrait | `{ center: "chara_tianshang_tired.webp" }` |
+| narration | ①「天殇靠在龙椅上。」<br>②「他的手在抖。」<br>③「很小幅度的抖。只有你看见了。」<br>④「他说：退朝。」 |
+| speaker | 天殇 |
+| line | 「退朝。」 |
+| next | `scene_02_06` |
+
+**节点 2-06 · 馆驿 · 夜**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_06` |
+| chapter | 第二日 · 夜 |
+| bg | `bg_inn_night.webp` |
+| bgm | `bgm_night_quiet.mp3` |
+| narration | ①「馆驿的灯很暗。」<br>②「你坐在案前，案上有一卷卷宗。」<br>③「你翻开它。第一行，是休养生息。」<br>④「第二行，是李司农今日说的话。」<br>⑤「第三行，是空的。」 |
+| choices | 见下方 |
+
+夜间调查选项：
+
+| 选项文案 | kind | 结果 |
+|---|---|---|
+| 查看李司农的官邸 | investigate | → `scene_02_07` |
+| 翻看卷宗的夹层 | investigate | → `scene_02_08` |
+| 直接休息 | silence | → `scene_02_10` |
+
+**节点 2-07 · 李司农官邸 · 空**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_07` |
+| chapter | 第二日 · 夜 |
+| bg | `bg_lisi_residence.webp` |
+| narration | ①「官邸的门没有锁。」<br>②「你推门进去。桌上有一碗饭。」<br>③「饭还是热的。」<br>④「桌边有一张纸。上面写着：」<br>⑤「『军屯之事，已办妥。北境三万人，可活。』」<br>⑥「落款是李元。日期是今天。」 |
+| onEnter | `["knowledge:lisi_saved_people"]` |
+| next | `scene_02_09` |
+
+**节点 2-08 · 卷宗夹层**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_08` |
+| chapter | 第二日 · 夜 |
+| bg | `cg_scroll_closeup.webp` |
+| narration | ①「你翻开卷宗的夹层。」<br>②「里面有一张更旧的纸。」<br>③「上面写着四个字。」<br>④「不是天殇的字。是另一个人的。」<br>⑤「『第四行，永远不会变。』」 |
+| onEnter | `["knowledge:fourth_line_never_changes"]` |
+| next | `scene_02_09` |
+
+**节点 2-09 · 阿檀出现**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_09` |
+| chapter | 第二日 · 夜 |
+| bg | `bg_inn_night.webp` |
+| portrait | `{ center: "chara_atan_neutral.webp" }` |
+| narration | ①「你回到馆驿时，她坐在你的位置上。」<br>②「抱着那卷卷宗。脚不沾地。」<br>③「她抬头看你，金色瞳孔里没有倒影。」 |
+| speaker | 阿檀 |
+| line | 「你看见了。」 |
+| choices | 见下方 |
+
+阿檀对话选项：
+
+| 选项文案 | kind | 结果 |
+|---|---|---|
+| 「你是谁？」 | ask | → `scene_02_09a` |
+| 「你也记得李司农？」 | ask | → `scene_02_09b` |
+| （沉默） | silence | → `scene_02_10`（阿檀好感 -1） |
+
+**节点 2-09a · 阿檀 · 身份**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_09a` |
+| chapter | 第二日 · 夜 |
+| speaker | 阿檀 |
+| line | 「我是卷宗。卷宗是我。」 |
+| next | `scene_02_09c` |
+
+**节点 2-09b · 阿檀 · 记得**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_09b` |
+| chapter | 第二日 · 夜 |
+| speaker | 阿檀 |
+| line | 「我不记得。我记录。」 |
+| next | `scene_02_09c` |
+
+**节点 2-09c · 阿檀 · 警告**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_09c` |
+| chapter | 第二日 · 夜 |
+| speaker | 阿檀 |
+| line | 「第三行，明天就会有人写上。第四行，永远是那四个字。」<br>「你想让第五行变成什么？」 |
+| onEnter | `["flag:met_atan"]` |
+| next | `scene_02_10` |
+
+**节点 2-10 · 馆驿 · 睡前**
+
+| 字段 | 值 |
+|---|---|
+| id | `scene_02_10` |
+| chapter | 第二日 · 夜 |
+| bg | `bg_inn_night.webp` |
+| narration | ①「你躺下。」<br>②「闭上眼睛。」<br>③「你听见窗外有人走过。脚步声很轻。」<br>④「然后是第二个。第三个。」<br>⑤「你没有睁眼。」<br>⑥「你数到了第十七个。」 |
+| autoDelay | 2800 |
+| next | `scene_03_01` |
+
+### 11.3 新增情报条目
+
+| ID | 情报内容 | 解锁方式 |
+|---|---|---|
+| `knows_price` | 「准」字需要代价。代价是提议者的存在。 | scene_02_04 自动解锁 |
+| `lisi_saved_people` | 李司农的「军屯」救了北境三万人。 | scene_02_07 调查官邸 |
+| `fourth_line_never_changes` | 第四行永远不会变。 | scene_02_08 调查夹层 |
+| `met_atan` | 阿檀是卷宗的具象化。她记录一切。 | scene_02_09c 自动解锁 |
+
+### 11.4 新增背景资源与生图提示词
+
+**馆驿夜景 · `pictures/bg/bg_inn_night.webp`**
+
+```
+Interior of a small ancient Chinese inn room at night, dim candlelight.
+A wooden desk with a scroll and an inkstone, a simple bed behind.
+Window half-open, moonlight falling on the floor.
+A single candle nearly burnt out.
+Quiet, lonely, slightly oppressive. No people.
+Cold blue moonlight meets warm orange candle glow.
+```
+
+**李司农官邸 · `pictures/bg/bg_lisi_residence.webp`**
+
+```
+Interior of a modest ancient Chinese official's residence at night, empty.
+A wooden table with a bowl of rice still steaming, a piece of paper beside it.
+A chair pushed back, as if someone just left.
+Candle flickering. No people. The room feels recently abandoned.
+Cold light from the window, warm light from the candle.
+Quiet, unsettling, sad.
+```
+
+### 11.5 多周目差异
+
+| 周目 | 差异 |
+|---|---|
+| 一周目 | 标准流程。李司农第一次登场，玩家第一次见证消散。 |
+| 二周目 | 在 `scene_02_01` 之前插入沈砚的短暂出现。他会说：「你回来了。」然后消失。玩家无法回应。 |
+| 三周目 | `scene_02_07` 官邸中多出一封信，是李司农写给玩家的。信里说：「如果还有下一次，请不要附议我。」 |
+| 四周目 | `scene_02_09` 阿檀的对话增加一个选项：「第五行，可以是我吗？」选择后解锁隐藏情报 `fifth_line_is_you`。 |
+
+### 11.6 与第三章的衔接
+
+本章结尾的「你数到了第十七个」是伏笔。第三章开头将揭示：那十七个脚步声，是十七位前代大臣的残影。他们在每一次循环中走过同一条走廊，走向同一个结局。玩家在第三章将第一次看见他们。
+
 ---
 
-以上为完整 AGENTS.md 文档，包含开发规范、剧本 Schema、引擎逻辑、叙事设计、任务拆解、禁止事项、术语表，以及图片资源存放位置与全部生图提示词。
+## 12. 存档回退机制（优化方案）
+
+### 12.1 设计原则
+
+规则怪谈的核心体验是**不可逆**。自由读档会摧毁「准」字的神圣感。因此：
+
+- ❌ 不提供随时读档回到选择前。
+- ✅ 提供章节级回退，且回退本身具有叙事意义。
+- ✅ 死亡不是惩罚，是信息。每次死亡解锁新情报。
+
+### 12.2 章节级回退
+
+| 机制 | 设计 |
+|---|---|
+| 死亡后 | 回到**本章开头**，而非游戏开头 |
+| 继承内容 | 已解锁的 `knowledge`、结局图鉴、周目数 |
+| 不继承内容 | 好感度、临时 flag、未解锁的选项 |
+| 回退表现 | 不是「读档」，而是「你睁开眼，又是正月十六。但你记得。」 |
+| 限制 | 每个章节最多回退 3 次，第 4 次强制进入「残影结局」（天殇发现你在重复） |
+
+### 12.3 情报继承
+
+跨周目保留 `knowledge` 数组。已解锁的情报不会因死亡或回退而丢失。这让「必死」的规则变成叙事资源，而非挫败感来源。
+
+### 12.4 代价回退：朱笔残片
+
+如果玩家坚持回退到**选择前**（而非章节开头），可使用稀有道具：
+
+- **朱笔残片**：使用后回到上一个选择点，但天殇好感 -3，且该选择点的所有 `echo` 选项永久变成灰色。
+- 本质：你用了天子的力量篡改自己的记录。天子知道。
+
+### 12.5 状态字段扩展
+
+在 `State` 中新增：
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| `chapterCheckpoint` | string | 当前章节的起始节点 ID |
+| `rollbackCount` | number | 本章已回退次数 |
+| `hasBrushFragment` | boolean | 是否持有朱笔残片 |
+| `rollbackUsedAt` | string[] | 已使用残片的节点 ID 列表 |
+
+---
+
+## 13. 开发任务更新（追加）
+
+| 阶段 | 任务 | 验收标准 |
+|---|---|---|
+| P1 | 第二章完整剧情（第二日） | 可通关一次，解锁 4 条情报 |
+| P1 | 章节级回退机制 | 死亡后回到本章开头，继承情报 |
+| P2 | 朱笔残片道具 | 可回退到选择前，有代价 |
+| P2 | 夜间调查系统（第二章） | 可调查官邸与卷宗夹层 |
+| P3 | 第二章多周目差异 | 二周目沈砚出现，三周目信件，四周目隐藏选项 |

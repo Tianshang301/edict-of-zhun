@@ -5,8 +5,12 @@
 
   const DEFAULT_STATE = {
     version: 1,
-    chapter: 1,
-    nodeId: "scene_1_1",
+    chapter: "",
+    nodeId: "scene_01_01",
+    chapterCheckpoint: "scene_01_01",
+    rollbackCount: 0,
+    hasBrushFragment: false,
+    rollbackUsedAt: [],
     flags: {},
     affinity: { tianshang: 0, shentan: 0, lisi: 0, atan: 0 },
     knowledge: [],
@@ -67,7 +71,7 @@
     if (Game.state.history.length > 200) Game.state.history.shift();
   };
 
-  /* ---- 周目继承：死亡后只留 knowledge / loop / deaths / inherited ---- */
+  /* ---- 周目继承：完整循环后只留 knowledge / loop / deaths / inherited ---- */
   Game.resetForLoop = function () {
     const carry = {
       knowledge: Game.state.knowledge.slice(),
@@ -81,6 +85,34 @@
     Game.state.loop = carry.loop;
     Game.state.deaths = carry.deaths;
     Game.state.inherited = carry.inherited;
+    Game.state.settings = carry.settings;
+    Game.state.meta.createdAt = Date.now();
+    Game.publish("state:change", Game.state);
+  };
+
+  /* ---- 章节级回退（§12）：保留 knowledge / loop / deaths / 章节进度，
+       清空 flags / 好感度 / 临时选项，回到 chapterCheckpoint ---- */
+  Game.resetForChapterRollback = function () {
+    const carry = {
+      knowledge: Game.state.knowledge.slice(),
+      loop: Game.state.loop,
+      deaths: Game.state.deaths,
+      chapter: Game.state.chapter,
+      chapterCheckpoint: Game.state.chapterCheckpoint,
+      rollbackCount: Game.state.rollbackCount,
+      hasBrushFragment: Game.state.hasBrushFragment,
+      rollbackUsedAt: (Game.state.rollbackUsedAt || []).slice(),
+      settings: clone(Game.state.settings)
+    };
+    Game.state = clone(DEFAULT_STATE);
+    Game.state.knowledge = carry.knowledge;
+    Game.state.loop = carry.loop;
+    Game.state.deaths = carry.deaths;
+    Game.state.chapter = carry.chapter;
+    Game.state.chapterCheckpoint = carry.chapterCheckpoint;
+    Game.state.rollbackCount = carry.rollbackCount;
+    Game.state.hasBrushFragment = carry.hasBrushFragment;
+    Game.state.rollbackUsedAt = carry.rollbackUsedAt;
     Game.state.settings = carry.settings;
     Game.state.meta.createdAt = Date.now();
     Game.publish("state:change", Game.state);

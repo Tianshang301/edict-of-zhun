@@ -48,12 +48,14 @@
     return "pictures/" + sub + src;
   }
 
-  /* 第二周目文本预处理：{{loop2:文}} */
+  /* 多周目文本预处理：{{loop2:文}} {{loop3:文}} {{loop4:文}} {{loop}} */
   function preprocess(text) {
     if (text == null) return "";
-    return String(text).replace(/\{\{loop2:([\s\S]*?)\}\}/g, function (_, t) {
-      return Game.state.loop >= 2 ? t : "";
-    }).replace(/\{\{loop\}\}/g, String(Game.state.loop));
+    return String(text)
+      .replace(/\{\{loop2:([\s\S]*?)\}\}/g, function (_, t) { return Game.state.loop >= 2 ? t : ""; })
+      .replace(/\{\{loop3:([\s\S]*?)\}\}/g, function (_, t) { return Game.state.loop >= 3 ? t : ""; })
+      .replace(/\{\{loop4:([\s\S]*?)\}\}/g, function (_, t) { return Game.state.loop >= 4 ? t : ""; })
+      .replace(/\{\{loop\}\}/g, String(Game.state.loop));
   }
 
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -114,12 +116,15 @@
     el.dialogue.style.display = "none";
     if (!paras || !paras.length) { if (done) done(); return; }
     el.narration.style.display = "";
+    /* 预处理：低周目下整段条件文本（{{loopN:...}}）会变为空，跳过不渲染 */
+    const list = paras.map(preprocess).filter(function (t) { return t.trim().length > 0; });
+    if (!list.length) { if (done) done(); return; }
     let i = 0;
     const step = (reduceMotion ? 120 : 650);
     function next() {
-      if (i >= paras.length) { if (done) done(); return; }
+      if (i >= list.length) { if (done) done(); return; }
       const p = document.createElement("p");
-      p.textContent = preprocess(paras[i]);
+      p.textContent = list[i];
       el.narration.appendChild(p);
       requestAnimationFrame(function () { p.classList.add("is-on"); });
       i++;
@@ -283,8 +288,9 @@
 
     el.endActions.innerHTML = "";
     const btn = document.createElement("button");
-    btn.className = "btn" + (e.type === "true" ? " btn--danger" : "");
-    btn.textContent = e.type === "true" ? "终" : "再入轮回";
+    const isTrue = e.type === "true";
+    btn.className = "btn" + (isTrue ? " btn--danger" : "");
+    btn.textContent = isTrue ? "终" : (e.type === "bad" ? "回到本章开头" : "再入轮回");
     btn.addEventListener("click", function () {
       el.ending.classList.remove("is-active");
       Game.continueEnding();
