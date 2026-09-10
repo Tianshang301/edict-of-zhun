@@ -200,9 +200,13 @@
     const node = Game.currentNode();
     if (!node) return;
     const hasChoices = node.choices && node.choices.length;
-    if (!hasChoices && (node.autoDelay != null)) {
+    if (hasChoices) {
+      renderChoices(node.choices);
+      return;
+    }
+    if (node.autoDelay != null) {
       setTimeout(function () { if (ready) Game.advance(); }, node.autoDelay);
-    } else if (!hasChoices) {
+    } else {
       el.dHint.textContent = "· 点击继续 ·";
     }
   }
@@ -213,6 +217,7 @@
     el.choices.innerHTML = "";
     el.dHint.textContent = "";
     el.dChapter.textContent = node.chapter || "";
+    el.screenGame.classList.toggle("has-choices", !!(node.choices && node.choices.length));
 
     if (node.bg) ui.setBg(node.bg, !!node.dark);
     ui.renderPortraits(node.portrait);

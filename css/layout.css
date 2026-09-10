@@ -76,6 +76,9 @@
 .dialogue__caret { display: inline-block; width: .5em; color: var(--c-gold); animation: caret-blink 1s steps(1) infinite; }
 .dialogue__hint { margin-top: .6rem; font-size: .78rem; color: var(--c-gold-d); text-align: right; opacity: .7; }
 
+/* 有选项时：抬高对白框，选项在其下方显示 */
+#screen-game.has-choices .dialogue { bottom: 28%; transition: bottom .4s ease; }
+
 /* 旁白（无对白框） */
 .narration {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
