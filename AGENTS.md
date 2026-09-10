@@ -518,12 +518,12 @@ Not a happy ending. A quiet one.
 
 #### 图 15 · UI 元素
 **存放：**
-- `pictures/ui/ui_choice_texture.webp` — 选项按钮底纹
-- `pictures/ui/ui_scroll_paper.webp` — 卷宗弹层背景
-- `pictures/ui/ui_seal_stamp.webp` — 朱批印章
-- `pictures/ui/ui_transition_ink.webp` — 转场遮罩
+- `pictures/ui/ui_choice_texture.webp` — 选项按钮底纹（64×64，九宫格可拉伸，`background-blend-mode: overlay`）
+- `pictures/ui/ui_scroll_paper.webp` — 卷宗弹层背景（256×256 seamless 平铺，覆盖 `.modal__panel`）
+- `pictures/ui/ui_seal_stamp.webp` — 朱批印章（256×256 透明底，`.verdict::after` 闪现）
+- `pictures/ui/ui_transition_ink.webp` — 转场遮罩（1920×1080 可平铺，`.transition::after` 墨晕扩散）
 
-**提示词：**
+**提示词：**（生成后对照 §10.5 自检）
 
 选项按钮底纹：
 ```
@@ -537,13 +537,24 @@ Aged yellow paper texture, rice paper fibers visible, faint ink stains at edges,
 
 朱批印章：
 ```
-A square vermilion seal stamp, Chinese seal script, abstract and illegible, slightly smudged, dried blood red, on dark background
+A square vermilion seal stamp, Chinese seal script, abstract and illegible, slightly smudged, dried blood red, on dark background, transparent background
 ```
 
 转场遮罩：
 ```
 Ink drop spreading in water, black ink diffusing into clear water, slow motion, high contrast, on white background, seamless loop
 ```
+
+**接入方式（渐进增强）：** UI 图为**可选增强层**。代码用双背景 / 伪元素接入：**有图显图、无图纯 CSS 兜底**——把 webp 放入 `pictures/ui/` 即自动生效，无需改代码，当前纯 CSS 视觉不退化。
+
+| 文件 | 接入点 | 无图兜底 |
+|---|---|---|
+| `ui_choice_texture.webp` | `.choice` `background-image` 顶层 + `overlay` 混合 | 现有金边渐变 |
+| `ui_scroll_paper.webp` | `.modal__panel` `background-image` + `soft-light` 混合 | 现有深色渐变 |
+| `ui_seal_stamp.webp` | `.verdict::after` 关键帧 `seal-flash`（准字落定后闪现） | 现有 CSS「准」字 |
+| `ui_transition_ink.webp` | `.transition::after` 关键帧 `ink-spread`（章节切换闪墨） | 纯黑场淡入 |
+
+> 规格：纹理图中心可拉伸（九宫格/平铺 seamless）；印章需透明底（WebP alpha 或 PNG）；一律无可读文字；遵守 §10.2 四色系与负面提示词。
 
 ### 10.4 生图优先级建议
 
@@ -561,7 +572,7 @@ Ink drop spreading in water, black ink diffusing into clear water, slow motion, 
 | P2 | 图 10 夜半寝殿 | `pictures/cg/cg_midnight_palace.webp` | 支线与线索 |
 | P2 | 图 11 龙椅背面 | `pictures/cg/cg_throne_back.webp` | 真结局线索 |
 | P2 | 图 12–14 结局 CG | `pictures/cg/cg_ending_*.webp` | 通关奖励 |
-| P3 | 图 15 UI 元素 | `pictures/ui/ui_*.webp` | 可用 CSS 替代 |
+| P3 | 图 15 UI 元素 | `pictures/ui/ui_*.webp` | 增强层，无图 CSS 兜底 |
 
 ### 10.5 风格一致性检查清单
 

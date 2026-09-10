@@ -36,6 +36,22 @@
 .verdict.is-on .verdict__drip { animation: verdict-drip 1.6s 0.4s ease-in forwards; }
 @keyframes verdict-drip { 0%{opacity:0;height:0} 10%{opacity:1} 100%{opacity:.5;height:40vh} }
 
+/* 朱批印章（渐进增强：ui_seal_stamp.webp 存在则闪现，无图不可见） */
+.verdict::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 26vmin; height: 26vmin;
+  transform: translate(-50%,-50%) scale(.4) rotate(-8deg);
+  background: url("../pictures/ui/ui_seal_stamp.webp") center/contain no-repeat;
+  opacity: 0; pointer-events: none;
+}
+.verdict.is-on::after { animation: seal-flash 2s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes seal-flash {
+  0%, 55% { opacity: 0; transform: translate(-50%,-50%) scale(1.4) rotate(-8deg); }
+  62%     { opacity: 1; transform: translate(-50%,-50%) scale(.95) rotate(-6deg); }
+  66%     { opacity: 1; transform: translate(-50%,-50%) scale(1) rotate(-6deg); }
+  100%    { opacity: .9; transform: translate(-50%,-50%) scale(1) rotate(-6deg); }
+}
+
 /* 消散遮罩 */
 .dissolve {
   position: absolute; inset: 0; z-index: var(--z-verdict);
@@ -55,6 +71,18 @@
   pointer-events: none; opacity: 0; background: #000; transition: opacity .45s ease;
 }
 .transition.is-on { opacity: 1; pointer-events: auto; }
+/* 墨晕扩散（渐进增强：ui_transition_ink.webp 存在则叠加，无图退回纯黑场） */
+.transition::after {
+  content: ""; position: absolute; inset: 0;
+  background: url("../pictures/ui/ui_transition_ink.webp") center/cover no-repeat;
+  opacity: 0; pointer-events: none;
+}
+.transition.is-on::after { animation: ink-spread .6s ease forwards; }
+@keyframes ink-spread {
+  0%   { opacity: 0; transform: scale(1.12); }
+  25%  { opacity: .9; }
+  100% { opacity: .25; transform: scale(1); }
+}
 
 /* 旁白淡入（段落） */
 .narration p.is-on { opacity: 1; transform: none; }

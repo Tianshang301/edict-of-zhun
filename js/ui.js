@@ -410,7 +410,14 @@
       }
     });
 
+    let lastChapter = undefined;
     Game.subscribe("node:enter", function (node) {
+      /* 章节（日）切换时闪墨晕转场（ui_transition_ink.webp 增强层） */
+      if (node.chapter && lastChapter !== undefined && node.chapter !== lastChapter) {
+        el.transition.classList.add("is-on");
+        setTimeout(function () { el.transition.classList.remove("is-on"); }, 650);
+      }
+      if (node.chapter) lastChapter = node.chapter;
       renderHUD();
       ui.renderNode(node);
     });
