@@ -1,0 +1,27 @@
+/* theme.css — 设计变量：骨白 / 墨黑 / 干血红 / 古金 */
+:root {
+  --c-bone:   #e6dcc8;   /* 骨白 */
+  --c-bone-d: #c9bda3;  /* 旧纸 */
+  --c-ink:    #0b0a08;   /* 墨黑 */
+  --c-ink-d:  #050403;
+  --c-blood:  #8a1c1c;   /* 干血红 */
+  --c-blood-l:#a82424;
+  --c-gold:   #b08d3e;   /* 古金 */
+  --c-gold-d: #6f5420;
+
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", "FangSong", Georgia, serif;
+  --font-kai:   "Kaiti SC", "STKaiti", "KaiTi", var(--font-serif);
+
+  --gap: 1rem;
+  --r: 4px;
+
+  --z-bg: 1;
+  --z-portrait: 2;
+  --z-dialogue: 5;
+  --z-hud: 8;
+  --z-modal: 20;
+  --z-verdict: 50;
+  --z-transition: 60;
+
+  --shadow-soft: 0 8px 40px rgba(0,0,0,.7);
+}

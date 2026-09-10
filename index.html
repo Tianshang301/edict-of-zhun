@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#050403">
+  <title>天殇 · 第二纪元</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <div id="game">
+
+    <!-- 标题屏 -->
+    <section id="screen-title" class="screen title is-active">
+      <img class="title__bg" src="pictures/cg/cg_main_visual.jpg" alt="">
+      <div class="title__inner">
+        <h1 class="title__name">天&nbsp;殇</h1>
+        <p class="title__sub">第 二 纪 元</p>
+        <div class="title__menu" id="title-menu"></div>
+      </div>
+    </section>
+
+    <!-- 游戏屏 -->
+    <section id="screen-game" class="screen">
+      <div class="bg-layer" id="bg-layer">
+        <img id="bg-img" class="bg-layer__img" alt="">
+        <div class="bg-vignette"></div>
+      </div>
+      <div class="portrait-layer" id="portrait-layer"></div>
+
+      <div class="narration" id="narration" hidden></div>
+
+      <div class="dialogue" id="dialogue">
+        <div class="dialogue__chapter" id="d-chapter"></div>
+        <div class="dialogue__speaker" id="d-speaker"></div>
+        <div class="dialogue__line" id="d-line"></div>
+        <div class="dialogue__hint" id="d-hint"></div>
+      </div>
+
+      <div class="choices" id="choices"></div>
+
+      <div class="hud">
+        <span class="hud__loop" id="hud-loop">第 1 周目</span>
+        <button class="hud__btn" id="btn-scroll" title="卷宗 (C)">卷宗</button>
+        <button class="hud__btn" id="btn-dossier" title="情报">情报</button>
+        <button class="hud__btn" id="btn-save" title="存档">存档</button>
+        <button class="hud__btn" id="btn-menu" title="返回标题">标题</button>
+      </div>
+    </section>
+
+    <!-- 结局屏 -->
+    <section id="screen-ending" class="ending">
+      <img id="end-cg" class="ending__cg" alt="" style="max-width:90%; max-height:55vh; margin-bottom:1rem; border:1px solid rgba(176,141,62,.3)">
+      <div class="ending__label" id="end-label"></div>
+      <h2 class="ending__title" id="end-title"></h2>
+      <div class="ending__body" id="end-body"></div>
+      <div class="ending__actions" id="end-actions"></div>
+    </section>
+
+    <!-- 卷宗 -->
+    <div class="modal" id="modal-scroll">
+      <div class="modal__panel scroll">
+        <button class="modal__close" data-close>×</button>
+        <div class="modal__title">卷 宗</div>
+        <div class="scroll__rule">
+          <div class="scroll__rule-num">其 一</div>
+          <div class="scroll__rule-text">天子问政，群臣当以旧制复。有议新者，天子批「准」。</div>
+        </div>
+        <div class="scroll__rule">
+          <div class="scroll__rule-num">其 二</div>
+          <div class="scroll__rule-text">「准」者，行之令也。令出，必以一命偿之。</div>
+        </div>
+        <div class="scroll__rule">
+          <div class="scroll__rule-num">其 三</div>
+          <div class="scroll__rule-text">惟「休养生息」一令，不行、不取、不偿，免偿。</div>
+        </div>
+        <div class="scroll__rule scroll__rule--4">
+          <div class="scroll__rule-num">其 四</div>
+          <div class="scroll__rule-text">朝议四日，第五位立，元年复始。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 情报 -->
+    <div class="modal" id="modal-dossier">
+      <div class="modal__panel">
+        <button class="modal__close" data-close>×</button>
+        <div class="modal__title">情 报</div>
+        <div id="dossier-list"></div>
+      </div>
+    </div>
+
+    <!-- 存档 -->
+    <div class="modal" id="modal-save">
+      <div class="modal__panel">
+        <button class="modal__close" data-close>×</button>
+        <div class="modal__title">存 档</div>
+        <div class="slots" id="save-list"></div>
+      </div>
+    </div>
+
+    <!-- 朱批 -->
+    <div class="verdict" id="verdict">
+      <div class="verdict__splatter"></div>
+      <div class="verdict__char" id="verdict-char">准</div>
+      <div class="verdict__drip" style="left:48%; top:30%"></div>
+    </div>
+
+    <!-- 消散 -->
+    <div class="dissolve" id="dissolve">
+      <img id="dissolve-img" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.35">
+      <div class="dissolve__ash"></div>
+    </div>
+
+    <!-- 转场 -->
+    <div class="transition" id="transition"></div>
+
+  </div>
+
+  <script src="js/state.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/script-data.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

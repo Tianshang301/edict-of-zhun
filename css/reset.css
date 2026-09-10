@@ -1,0 +1,12 @@
+/* reset.css — 归一化 */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; }
+body { line-height: 1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+ul, ol { list-style: none; }
+:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 2px; }
+[hidden] { display: none !important; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--c-gold); border-radius: 4px; opacity: .4; }
