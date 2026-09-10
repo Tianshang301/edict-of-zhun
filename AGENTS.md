@@ -518,10 +518,10 @@ Not a happy ending. A quiet one.
 
 #### 图 15 · UI 元素
 **存放：**
-- `pictures/ui/ui_choice_texture.webp` — 选项按钮底纹（64×64，九宫格可拉伸，`background-blend-mode: overlay`）
-- `pictures/ui/ui_scroll_paper.webp` — 卷宗弹层背景（256×256 seamless 平铺，覆盖 `.modal__panel`）
-- `pictures/ui/ui_seal_stamp.webp` — 朱批印章（256×256 透明底，`.verdict::after` 闪现）
-- `pictures/ui/ui_transition_ink.webp` — 转场遮罩（1920×1080 可平铺，`.transition::after` 墨晕扩散）
+- `pictures/ui/ui_choice_texture.webp/.jpg` — 选项按钮底纹（暗漆木+暖木纹，`background-blend-mode: overlay`）
+- `pictures/ui/ui_scroll_paper.webp/.jpg` — 卷宗弹层背景（旧纸质感，覆盖 `.modal__panel`，`soft-light` 混合）
+- `pictures/ui/ui_seal_stamp.png/.webp` — 朱批印章（**必须透明底 PNG/WebP**，`.verdict::after` 闪现）
+- `pictures/ui/ui_transition_ink.webp/.jpg` — 转场遮罩（墨入水，用作 `.transition` 亮度掩膜）
 
 **提示词：**（生成后对照 §10.5 自检）
 
@@ -537,7 +537,7 @@ Aged yellow paper texture, rice paper fibers visible, faint ink stains at edges,
 
 朱批印章：
 ```
-A square vermilion seal stamp, Chinese seal script, abstract and illegible, slightly smudged, dried blood red, on dark background, transparent background
+A square vermilion seal stamp, Chinese seal script, abstract and illegible, slightly smudged, dried blood red, on black background, transparent background
 ```
 
 转场遮罩：
@@ -545,16 +545,20 @@ A square vermilion seal stamp, Chinese seal script, abstract and illegible, slig
 Ink drop spreading in water, black ink diffusing into clear water, slow motion, high contrast, on white background, seamless loop
 ```
 
-**接入方式（渐进增强）：** UI 图为**可选增强层**。代码用双背景 / 伪元素接入：**有图显图、无图纯 CSS 兜底**——把 webp 放入 `pictures/ui/` 即自动生效，无需改代码，当前纯 CSS 视觉不退化。
+**接入方式（渐进增强）：** UI 图为**可选增强层**。代码用双背景 / 伪元素 / 亮度掩膜接入：**有图显图、无图纯 CSS 兜底**——把图放入 `pictures/ui/` 即自动生效，无需改代码，当前纯 CSS 视觉不退化。
 
 | 文件 | 接入点 | 无图兜底 |
 |---|---|---|
-| `ui_choice_texture.webp` | `.choice` `background-image` 顶层 + `overlay` 混合 | 现有金边渐变 |
-| `ui_scroll_paper.webp` | `.modal__panel` `background-image` + `soft-light` 混合 | 现有深色渐变 |
-| `ui_seal_stamp.webp` | `.verdict::after` 关键帧 `seal-flash`（准字落定后闪现） | 现有 CSS「准」字 |
-| `ui_transition_ink.webp` | `.transition::after` 关键帧 `ink-spread`（章节切换闪墨） | 纯黑场淡入 |
+| `ui_choice_texture.*` | `.choice` `background-image` 顶层 + `overlay` 混合 | 现有金边渐变 |
+| `ui_scroll_paper.*` | `.modal__panel` `background-image` + `soft-light` 混合 | 现有深色渐变 |
+| `ui_seal_stamp.png/webp` | `.verdict::after` 关键帧 `seal-flash`（准字落定后闪现） | 现有 CSS「准」字 |
+| `ui_transition_ink.*` | `.transition` `mask-image: luminance`（浅水区=黑场、墨团=透出，墨洞转场） | 纯黑场淡入 |
 
-> 规格：纹理图中心可拉伸（九宫格/平铺 seamless）；印章需透明底（WebP alpha 或 PNG）；一律无可读文字；遵守 §10.2 四色系与负面提示词。
+> 规格：
+> - 不透明纹理（choice / scroll / transition）可用 JPG（当前即 `.jpg`，1728×960）。
+> - **印章必须透明底**（PNG 或 WebP alpha）——JPG 无透明通道，白底印章放黑底朱批上会闪白块，故代码仍指向 `ui_seal_stamp.webp`（休眠）；把透明底图命名为 `ui_seal_stamp.png` 或 `ui_seal_stamp.webp` 即启用。
+> - transition 用作 `mask-image`，需**高对比、白底**（白=不透明、墨=镂空）。
+> - 一律无可读文字；遵守 §10.2 四色系与负面提示词。
 
 ### 10.4 生图优先级建议
 

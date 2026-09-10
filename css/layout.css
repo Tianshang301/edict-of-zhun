@@ -121,8 +121,8 @@
 .modal.is-open { display: flex; }
 .modal__panel {
   width: min(640px, 92%); max-height: 86%; overflow: auto;
-  /* 渐进增强：ui_scroll_paper.webp 存在则叠宣纸底，无图退回纯渐变 */
-  background-image: url("../pictures/ui/ui_scroll_paper.webp"), linear-gradient(to bottom, #1a140c, #0c0a07);
+  /* 渐进增强：ui_scroll_paper.jpg 存在则叠宣纸底，无图退回纯渐变 */
+  background-image: url("../pictures/ui/ui_scroll_paper.jpg"), linear-gradient(to bottom, #1a140c, #0c0a07);
   background-position: center; background-size: cover; background-repeat: no-repeat;
   background-blend-mode: soft-light;
   border: 1px solid rgba(176,141,62,.5); box-shadow: var(--shadow-soft);

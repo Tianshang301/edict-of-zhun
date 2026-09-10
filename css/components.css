@@ -5,8 +5,8 @@
   font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.7;
   color: var(--c-bone); letter-spacing: .04em;
   padding: .75rem 1rem .75rem 2rem;
-  /* 渐进增强：ui_choice_texture.webp 存在则叠加漆木底纹，无图退回纯渐变 */
-  background-image: url("../pictures/ui/ui_choice_texture.webp"), linear-gradient(to right, rgba(176,141,62,.10), rgba(12,10,8,.85));
+  /* 渐进增强：ui_choice_texture.jpg 存在则叠加漆木底纹，无图退回纯渐变 */
+  background-image: url("../pictures/ui/ui_choice_texture.jpg"), linear-gradient(to right, rgba(176,141,62,.10), rgba(12,10,8,.85));
   background-position: center; background-size: cover; background-repeat: no-repeat;
   background-blend-mode: overlay;
   border: 1px solid rgba(176,141,62,.35); border-left: 3px solid var(--c-gold-d);
@@ -16,7 +16,7 @@
   content: "·"; position: absolute; left: .85rem; top: .55rem; color: var(--c-gold); font-size: 1.4rem;
 }
 .choice:hover {
-  background-image: url("../pictures/ui/ui_choice_texture.webp"), linear-gradient(to right, rgba(176,141,62,.22), rgba(12,10,8,.85));
+  background-image: url("../pictures/ui/ui_choice_texture.jpg"), linear-gradient(to right, rgba(176,141,62,.22), rgba(12,10,8,.85));
   transform: translateX(3px);
 }
 .choice:disabled { opacity: .4; cursor: not-allowed; }

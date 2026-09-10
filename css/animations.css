@@ -65,24 +65,20 @@
 }
 @keyframes dissolve-rise { to { height: 80vh; opacity: 0; } }
 
-/* 墨转场 */
+/* 墨转场
+   渐进增强：ui_transition_ink.jpg 存在时用作「亮度掩膜」——浅水区=黑场、墨团=透出下一幕（墨洞效果）；
+   无图则退回纯黑场淡入 */
 .transition {
   position: absolute; inset: 0; z-index: var(--z-transition);
   pointer-events: none; opacity: 0; background: #000; transition: opacity .45s ease;
+  -webkit-mask-image: url("../pictures/ui/ui_transition_ink.jpg");
+          mask-image: url("../pictures/ui/ui_transition_ink.jpg");
+  -webkit-mask-size: cover; mask-size: cover;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-mode: luminance; mask-mode: luminance;
 }
 .transition.is-on { opacity: 1; pointer-events: auto; }
-/* 墨晕扩散（渐进增强：ui_transition_ink.webp 存在则叠加，无图退回纯黑场） */
-.transition::after {
-  content: ""; position: absolute; inset: 0;
-  background: url("../pictures/ui/ui_transition_ink.webp") center/cover no-repeat;
-  opacity: 0; pointer-events: none;
-}
-.transition.is-on::after { animation: ink-spread .6s ease forwards; }
-@keyframes ink-spread {
-  0%   { opacity: 0; transform: scale(1.12); }
-  25%  { opacity: .9; }
-  100% { opacity: .25; transform: scale(1); }
-}
 
 /* 旁白淡入（段落） */
 .narration p.is-on { opacity: 1; transform: none; }
@@ -99,5 +95,7 @@
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .verdict__char, .verdict.is-on .verdict__char { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .verdict.is-on::after { animation: none !important; opacity: .9 !important; transform: translate(-50%,-50%) scale(1) rotate(-6deg) !important; }
   .dissolve__ash { animation: none !important; height: 60vh !important; opacity: .4 !important; }
+  .transition { -webkit-mask-image: none; mask-image: none; }
 }
