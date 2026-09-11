@@ -1,8 +1,8 @@
 # VOICE_PROMPTS.md — TTS 配音提示词（CosyVoice2 / IndexTTS instruct）
 
 > 引擎：CosyVoice2 / IndexTTS instruct 模式。每条语音 = `声线描述 + 文本`。
-> 文件命名：`audio/voice/<nodeId>_<speaker>.mp3`（如 `scene_02_03_tianshang.mp3`）。
-> 未生成的文件会静默跳过（audio.js 接入时无图即无声，不报错）。
+> 文件命名：`audio/voice/<nodeId>_<speaker>.wav`（如 `scene_02_03_tianshang.wav`）。
+> 当前已配齐 24 个节点语音，与 `js/script-data.js` 一一对应（校验见 `VOICE_PROMPTS.md` 附表；`audio.js` 接入时按 `audio/voice/<nodeId>_<speaker>.wav` 播放，缺失静默跳过）。
 
 ---
 
@@ -37,7 +37,7 @@
 
 ## 二、对白清单（23 句）
 
-### 天殇（11）
+### 天殇（12）
 
 | nodeId | 文本 | 指令 |
 |---|---|---|
@@ -52,6 +52,9 @@
 | `scene_04_ask` | ……你想问，这卷宗是谁写的。朕写的。——不。朕，也是被写的。 | "不"字一顿，转向自嘲的虚 |
 | `scene_04_ask2` | 朕说不出『不准』。那是枷锁，也是钥匙。——你，要试吗？ | 压抑，末句"要试吗"带极淡的希望 |
 | `scene_04_truth2` | ……不准。 | 不准：压抑的颤 → 一字一顿 → 末尾松一口气（释然），三段 |
+| `scene_04_safe` | 准。 | 准④：几乎气声、像念旧档 |
+
+> **注意**：`scene_04_safe` 当前复用 `scene_03_safe`（准③）音频（`copy`）；若想单独配更虚的准④，生成 `scene_04_safe_tianshang.wav` 覆盖即可。`scene_04_secondera`（「……你要续写第一行？」）已改为旁白，不需要语音；若想让天殇开口，生成 `scene_04_secondera_tianshang.wav` 后恢复为对白。
 
 **4×「准」渐虚梯度**（§5.2「越来越少话」）：
 准① 尚稳 → 准② 略迟疑 → 准③ 更虚更短 → 准④（`scene_04_safe`）几乎气声、像念旧档。

@@ -163,6 +163,24 @@
       portrait: { center: "chara_tianshang_calm", centerFx: "tired" },
       narration: ["天殇靠在龙椅上。", "他的手在抖。", "很小幅度的抖。只有你看见了。", "他说：退朝。"],
       speaker: "天殇", line: "退朝。",
+      next: "scene_02_night"
+    },
+    /* 退朝后 · 沈砚廊下警句（配音节点 scene_02_night_shenyan.wav / scene_02_night_l2_shenyan.wav） */
+    scene_02_night: {
+      id: "scene_02_night", chapter: "第二日 · 北境大旱",
+      bg: "bg_throne_hall.jpg", dark: true,
+      portrait: { left: "chara_shentan_normal" },
+      narration: ["殿门合上。", "退朝的人群散去。你落在最后。", "一个穿青袍的人在你身侧，像一道没干透的墨。"],
+      speaker: "沈砚", line: "大人，您不该总不开口。不开口的人，学不到东西。",
+      nextIf: [{ if: "state.loop >= 2", next: "scene_02_night_l2" }],
+      next: "scene_02_06"
+    },
+    scene_02_night_l2: {
+      id: "scene_02_night_l2", chapter: "第二日 · 北境大旱",
+      bg: "bg_throne_hall.jpg", dark: true,
+      portrait: { left: "chara_shentan_normal" },
+      speaker: "沈砚", line: "……大人，您这是第几次了？下官记不清了。卷宗上有。",
+      onEnter: ["knowledge:k_loop_count"],
       next: "scene_02_06"
     },
     scene_02_06: {
@@ -314,7 +332,8 @@
         "他们没有脸。"
       ],
       onEnter: ["knowledge:k_seventeen"],
-      portrait: { left: "chara_shentan_normal" },
+      portrait: { left: "chara_shentan_normal", right: "chara_lisi_normal", rightFx: "fading-50" },
+      speaker: "李司农", line: "大人……下官怎么觉得，自己轻了一些？",
       nextIf: [{ if: "state.loop >= 2", next: "scene_03_night_l2" }],
       next: "scene_04_01"
     },
@@ -368,9 +387,8 @@
     scene_04_secondera: {
       id: "scene_04_secondera", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
-      narration: ["你走向龙椅。", "没有人拦你。", "椅背漆黑，刻满同一行字，层层叠叠。"],
+      narration: ["你走向龙椅。", "没有人拦你。", "椅背漆黑，刻满同一行字，层层叠叠。", "身后传来天殇的声音：「……你要续写第一行？」"],
       portrait: { right: "chara_tianshang_calm", rightFx: "breaking" },
-      speaker: "天殇", line: "……你要续写第一行？",
       autoDelay: 900, next: "scene_04_secondera2"
     },
     scene_04_secondera2: {
