@@ -448,5 +448,16 @@
     if (toTitleBtn) toTitleBtn.onclick = function () {
       if (confirm("返回标题？将自动存档。")) { Game.save("auto"); ui.title(); }
     };
+    /* 语音开关（audio.js 增强层） */
+    const muteBtn = document.getElementById("btn-mute");
+    if (muteBtn) {
+      const syncMute = function (m) { muteBtn.textContent = m ? "静" : "声"; muteBtn.classList.toggle("btn--danger", !!m); };
+      if (Game.audio) {
+        muteBtn.onclick = function () { if (Game.audio.toggleMute) syncMute(Game.audio.toggleMute()); };
+        syncMute(Game.audio.isMuted ? Game.audio.isMuted() : false);
+      } else {
+        muteBtn.style.display = "none";
+      }
+    }
   };
 })();
