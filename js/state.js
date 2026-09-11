@@ -58,8 +58,8 @@
     if (!Game.hasKnowledge(k)) {
       Game.state.knowledge.push(k);
       Game.publish("knowledge:add", k);
-      if (k === "k_truth") Game.setFlag("knows_truth");
     }
+    if (k === "k_truth") Game.setFlag("knows_truth");
   };
 
   Game.adjustAffinity = function (obj) {
