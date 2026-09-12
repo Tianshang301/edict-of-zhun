@@ -50,7 +50,7 @@
     scene_01_02: {
       id: "scene_01_02", chapter: "第一日 · 休养生息",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm" },
+      portrait: { right: "chara_tianshang_calm.png" },
       speaker: "天殇",
       line: "新来的第五位。\n岁凶民饥，何以处之？",
       choices: [
@@ -62,7 +62,7 @@
     scene_01_safe: {
       id: "scene_01_safe", chapter: "第一日 · 休养生息",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm" },
+      portrait: { right: "chara_tianshang_calm.png" },
       speaker: "天殇", line: "准。",
       autoDelay: 700, next: "scene_01_scroll"
     },
@@ -88,7 +88,7 @@
       id: "scene_01_night", chapter: "第一日 · 休养生息",
       bg: "bg_throne_hall.jpg", dark: true,
       narration: ["入夜。", "朝堂无人，烛火如豆。", "一个穿青袍的人站在你身后。{{loop2:你认得他。他每次都在。}}"],
-      portrait: { left: "chara_shentan_normal" },
+      portrait: { left: "chara_shentan_normal.png" },
       onEnter: ["knowledge:k_shentan_ink"],
       speaker: "沈砚",
       line: "新大人。下官沈砚，第六位。{{loop2:——不，下官既是第六位，也是第一个。}} 官袍上的墨，四百年，洗不掉。",
@@ -102,7 +102,7 @@
       id: "scene_02_00", chapter: "第二日 · 北境大旱",
       bg: "bg_throne_hall.jpg", dark: true,
       narration: ["殿门未开。", "沈砚站在你身后，像一道没干透的墨。", "他看着你，像看着一个走了很远的人。"],
-      portrait: { left: "chara_shentan_normal" },
+      portrait: { left: "chara_shentan_normal.png" },
       speaker: "沈砚", line: "你回来了。",
       autoDelay: 1500, next: "scene_02_01"
     },
@@ -115,7 +115,7 @@
         "他们不敢喊冤。只是跪着。一排。又一排。",
         "殿门没有关。天殇没有让人关门。"
       ],
-      portrait: { right: "chara_tianshang_calm" },
+      portrait: { right: "chara_tianshang_calm.png" },
       speaker: "天殇", line: "北境大旱。卿等，有何言？",
       choices: [
         { text: "「臣附议李司农。」", kind: "echo", next: "scene_02_03" },
@@ -127,7 +127,7 @@
     scene_02_02: {
       id: "scene_02_02", chapter: "第二日 · 北境大旱",
       bg: "bg_throne_hall.jpg",
-      portrait: { center: "chara_lisi_normal" },
+      portrait: { center: "chara_lisi_normal.png" },
       narration: [
         "殿上沉默了很久。",
         "然后有人出列。",
@@ -140,7 +140,7 @@
     scene_02_03: {
       id: "scene_02_03", chapter: "第二日 · 北境大旱",
       bg: "bg_throne_hall.jpg",
-      portrait: { left: "chara_tianshang_calm", center: "chara_lisi_normal" },
+      portrait: { left: "chara_tianshang_calm.png", center: "chara_lisi_normal.png" },
       narration: ["天殇看着他。", "看了很久。", "久到你以为他会说『不准』。"],
       speaker: "天殇", line: "准。",
       autoDelay: 2200, onEnter: ["flag:watched_lisi_dissolve"], next: "scene_02_04"
@@ -160,7 +160,7 @@
     scene_02_05: {
       id: "scene_02_05", chapter: "第二日 · 北境大旱",
       bg: "bg_throne_hall.jpg",
-      portrait: { center: "chara_tianshang_calm", centerFx: "tired" },
+      portrait: { center: "chara_tianshang_calm.png", centerFx: "tired" },
       narration: ["天殇靠在龙椅上。", "他的手在抖。", "很小幅度的抖。只有你看见了。", "他说：退朝。"],
       speaker: "天殇", line: "退朝。",
       next: "scene_02_night"
@@ -169,7 +169,7 @@
     scene_02_night: {
       id: "scene_02_night", chapter: "第二日 · 北境大旱",
       bg: "bg_throne_hall.jpg", dark: true,
-      portrait: { left: "chara_shentan_normal" },
+      portrait: { left: "chara_shentan_normal.png" },
       narration: ["殿门合上。", "退朝的人群散去。你落在最后。", "一个穿青袍的人在你身侧，像一道没干透的墨。"],
       speaker: "沈砚", line: "大人，您不该总不开口。不开口的人，学不到东西。",
       nextIf: [{ if: "state.loop >= 2", next: "scene_02_night_l2" }],
@@ -178,7 +178,7 @@
     scene_02_night_l2: {
       id: "scene_02_night_l2", chapter: "第二日 · 北境大旱",
       bg: "bg_throne_hall.jpg", dark: true,
-      portrait: { left: "chara_shentan_normal" },
+      portrait: { left: "chara_shentan_normal.png" },
       speaker: "沈砚", line: "……大人，您这是第几次了？下官记不清了。卷宗上有。",
       onEnter: ["knowledge:k_loop_count"],
       next: "scene_02_06"
@@ -228,7 +228,7 @@
     scene_02_09: {
       id: "scene_02_09", chapter: "第二日 · 北境大旱",
       bg: "bg_inn_night.jpg", dark: true,
-      portrait: { center: "chara_atan_neutral" },
+      portrait: { center: "chara_atan_neutral.png" },
       narration: [
         "你回到馆驿时，她坐在你的位置上。",
         "抱着那卷卷宗。脚不沾地。",
@@ -293,7 +293,7 @@
     scene_03_02: {
       id: "scene_03_02", chapter: "第三日 · 十七残影",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm", rightFx: "tired" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "tired" },
       speaker: "天殇", line: "第三问。吏治积弊，何以清之？",
       choices: [
         { text: "复旧制：考成法。", kind: "echo", next: "scene_03_safe" },
@@ -304,7 +304,7 @@
     scene_03_safe: {
       id: "scene_03_safe", chapter: "第三日 · 十七残影",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm", rightFx: "tired" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "tired" },
       speaker: "天殇", line: "准。",
       autoDelay: 700, next: "scene_03_after"
     },
@@ -332,7 +332,7 @@
         "他们没有脸。"
       ],
       onEnter: ["knowledge:k_seventeen"],
-      portrait: { left: "chara_shentan_normal", right: "chara_lisi_normal", rightFx: "fading-50" },
+      portrait: { left: "chara_shentan_normal.png", right: "chara_lisi_normal.png", rightFx: "fading-50" },
       speaker: "李司农", line: "大人……下官怎么觉得，自己轻了一些？",
       nextIf: [{ if: "state.loop >= 2", next: "scene_03_night_l2" }],
       next: "scene_04_01"
@@ -340,7 +340,7 @@
     scene_03_night_l2: {
       id: "scene_03_night_l2", chapter: "第三日 · 十七残影",
       bg: "bg_throne_hall.jpg", dark: true,
-      portrait: { left: "chara_shentan_normal" },
+      portrait: { left: "chara_shentan_normal.png" },
       narration: ["沈砚站在第十七个影子里。", "他是第一个『第五位』。"],
       onEnter: ["knowledge:k_truth"],
       speaker: "沈砚", line: "我也是他们之一。天子……也是被写在卷宗上的，是吗。",
@@ -357,7 +357,7 @@
     scene_04_02: {
       id: "scene_04_02", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm", rightFx: "breaking", left: "chara_atan_neutral" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking", left: "chara_atan_neutral.png" },
       speaker: "天殇", line: "第四问。……你，还想问什么？",
       choices: [
         { text: "复旧制：休养生息。", kind: "echo", next: "scene_04_safe" },
@@ -370,14 +370,14 @@
     scene_04_ask: {
       id: "scene_04_ask", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm", rightFx: "breaking" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking" },
       speaker: "天殇", line: "……你想问，这卷宗是谁写的。朕写的。——不。朕，也是被写的。",
       next: "scene_04_ask2"
     },
     scene_04_ask2: {
       id: "scene_04_ask2", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm", rightFx: "breaking", left: "chara_atan_neutral" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking", left: "chara_atan_neutral.png" },
       speaker: "天殇", line: "朕说不出『不准』。那是枷锁，也是钥匙。——你，要试吗？",
       choices: [
         { text: "臣请陛下，说『不准』。", kind: "meta", require: "Game.hasKnowledge('k_throne_back') === true", next: "scene_04_truth" },
@@ -388,7 +388,7 @@
       id: "scene_04_secondera", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
       narration: ["你走向龙椅。", "没有人拦你。", "椅背漆黑，刻满同一行字，层层叠叠。", "身后传来天殇的声音：「……你要续写第一行？」"],
-      portrait: { right: "chara_tianshang_calm", rightFx: "breaking" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking" },
       autoDelay: 900, next: "scene_04_secondera2"
     },
     scene_04_secondera2: {
@@ -406,14 +406,14 @@
     scene_04_truth2: {
       id: "scene_04_truth2", chapter: "第四日 · 破局",
       bg: "cg_throne_back.jpg",
-      portrait: { right: "chara_tianshang_calm", rightFx: "breaking" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking" },
       speaker: "天殇", line: "……不准。",
       autoDelay: 1500, ending: "E_TRUE"
     },
     scene_04_safe: {
       id: "scene_04_safe", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
-      portrait: { right: "chara_tianshang_calm", rightFx: "breaking" },
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking" },
       speaker: "天殇", line: "准。",
       autoDelay: 700, next: "scene_04_night"
     },

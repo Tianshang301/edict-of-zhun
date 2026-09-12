@@ -108,6 +108,7 @@
     place("left", p.left, p.leftFx);
     place("right", p.right, p.rightFx);
     if (p.focus) place("focus", p.focus, p.focusFx);
+    else if (p.center) place("focus", p.center, p.centerFx);
   };
 
   /* ---- 旁白 ---- */

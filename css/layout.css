@@ -29,9 +29,6 @@
 .portrait {
   position: absolute; bottom: 0; height: 86%; max-height: 86vh;
   transition: opacity .5s ease, filter .5s ease, transform .5s ease;
-  /* 羽化 jpg 方形边缘，使其融入暗景 */
-  -webkit-mask-image: radial-gradient(ellipse 60% 80% at 50% 60%, #000 55%, transparent 92%);
-          mask-image: radial-gradient(ellipse 60% 80% at 50% 60%, #000 55%, transparent 92%);
 }
 .portrait--left  { left: 2%; }
 .portrait--right { right: 2%; }
