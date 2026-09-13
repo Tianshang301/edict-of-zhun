@@ -223,9 +223,10 @@
         "里面有一张更旧的纸。",
         "上面写着四个字。",
         "不是天殇的字。是另一个人的。",
-        "『第四行，永远不会变。』"
+        "『第四行，永远不会变。』",
+        "夹层最底，压着一枚断笔头。朱砂未干。你收下了它。"
       ],
-      onEnter: ["knowledge:fourth_line_never_changes"], next: "scene_02_09"
+      onEnter: ["knowledge:fourth_line_never_changes", "brush:fragment"], next: "scene_02_09"
     },
     scene_02_09: {
       id: "scene_02_09", chapter: "第二日 · 北境大旱",

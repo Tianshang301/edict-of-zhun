@@ -182,6 +182,8 @@
   function renderChoices(choices) {
     el.choices.innerHTML = "";
     if (!choices || !choices.length) return;
+    const nodeId = Game.currentNode() && Game.currentNode().id;
+    const burnedNodes = Game.state.rollbackUsedAt || [];
     choices.forEach(function (c, idx) {
       const avail = Game.choiceAvailable(c);
       if (!avail && c.hideIfLocked) return;
@@ -191,6 +193,12 @@
       else if (c.kind === "meta" || c.kind === "ask") cls += " choice--meta";
       b.className = cls;
       if (!avail) { b.disabled = true; b.title = "（条件未足）"; }
+      /* 朱笔残片代价：该选择点的复述旧制本轮回永久封死 */
+      if (c.kind === "echo" && burnedNodes.indexOf(nodeId) > -1) {
+        b.disabled = true;
+        b.title = "（朱笔已锈，此路已封）";
+        b.classList.add("choice--burned");
+      }
       const tag = document.createElement("span");
       tag.className = "choice__tag";
       tag.textContent = kindTag(c.kind);
@@ -318,6 +326,16 @@
       Game.continueEnding();
     });
     el.endActions.appendChild(btn);
+    if (e.type === "bad" && Game.canUseBrushFragment && Game.canUseBrushFragment()) {
+      const frag = document.createElement("button");
+      frag.className = "btn btn--ghost";
+      frag.textContent = "以残片篡改记录";
+      frag.addEventListener("click", function () {
+        el.ending.classList.remove("is-active");
+        Game.useBrushFragment();
+      });
+      el.endActions.appendChild(frag);
+    }
 
     el.ending.classList.add("is-active");
   };
@@ -352,6 +370,12 @@
       " · 沈砚 " + affWord("shentan") +
       " · 李司农 " + affWord("lisi");
     list.appendChild(aff);
+    if (Game.state.hasBrushFragment) {
+      const frag = document.createElement("div");
+      frag.className = "dossier__frag";
+      frag.textContent = "持有 · 朱笔残片 ×1（死于新议时，可篡改记录回退至选择前）";
+      list.appendChild(frag);
+    }
     if (!Game.state.knowledge.length) {
       const li = document.createElement("div");
       li.className = "dossier__none";

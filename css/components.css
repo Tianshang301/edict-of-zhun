@@ -24,6 +24,9 @@
 .choice--danger::before { color: var(--c-blood-l); }
 .choice--meta { border-left-color: var(--c-bone); color: var(--c-bone); }
 .choice--meta::before { color: var(--c-bone); }
+/* 朱笔残片代价：复述旧制被封死 */
+.choice--burned { border-left-color: #555; color: #777; opacity: .55; text-decoration: line-through; }
+.choice--burned::before { color: #555; }
 .choice__tag { font-family: var(--font-kai); font-size: .7rem; color: var(--c-gold-d); margin-right: .5em; letter-spacing: .1em; }
 
 /* 卷宗（规则弹层） */
@@ -56,6 +59,7 @@
   color: var(--c-gold-d); font-size: .95rem; letter-spacing: .05em;
 }
 .dossier__item { padding: .6rem 0; border-bottom: 1px dashed rgba(176,141,62,.2); color: var(--c-bone-d); line-height: 1.9; }
+.dossier__frag { padding: .5rem 0; color: var(--c-blood-l); font-size: .9rem; letter-spacing: .04em; border-bottom: 1px dashed rgba(176,141,62,.2); }
 .dossier__item:last-child { border-bottom: none; }
 .dossier__none { color: #555; font-style: italic; }
 

@@ -17,6 +17,7 @@
     node.onEnter.forEach(function (eff) {
       if (eff.indexOf("knowledge:") === 0) Game.addKnowledge(eff.slice(10));
       else if (eff.indexOf("flag:") === 0) Game.setFlag(eff.slice(5));
+      else if (eff.indexOf("brush:") === 0) { if (!Game.state.hasBrushFragment) Game.state.hasBrushFragment = true; }
     });
   }
 
@@ -176,6 +177,25 @@
     Game.state.loop++;
     Game.resetForLoop();
     Game.go(Game.firstNode);
+  };
+
+  /* ---- 朱笔残片（§12.4 代价回退） ---- */
+  Game.canUseBrushFragment = function () {
+    return !!Game.currentNode() &&
+      !!Game.state.hasBrushFragment &&
+      Game.state.rollbackCount < 3;
+  };
+
+  /* 使用残片：回到选择点（propose 死亡时仍在选择点上），
+     代价：道具消耗 / 天殇好感 -3 / 该节点 echo 本轮回永久灰 */
+  Game.useBrushFragment = function () {
+    if (!Game.canUseBrushFragment()) return;
+    const nodeId = Game.state.nodeId;
+    Game.state.hasBrushFragment = false;
+    if (Game.state.rollbackUsedAt.indexOf(nodeId) < 0) Game.state.rollbackUsedAt.push(nodeId);
+    Game.resetForChapterRollback();                 /* 保留知识 / 残片状态，清 flag / 好感 */
+    Game.state.affinity.tianshang = (Game.state.affinity.tianshang || 0) - 3;
+    Game.go(nodeId);
   };
 
   /* ---- 开局 ---- */
