@@ -7,4 +7,5 @@ Desktop.ini
 .idea/
 node_modules/
 audio/*.wav
+audio/bgm/*.mp4
 

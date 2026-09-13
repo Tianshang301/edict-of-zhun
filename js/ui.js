@@ -72,7 +72,10 @@
       if (s) s.classList.toggle("is-active", s.id === "screen-" + name);
     });
   }
-  ui.title = function () { showScreen("title"); };
+  ui.title = function () {
+    showScreen("title");
+    if (Game.audio && Game.audio.playTitleBgm) Game.audio.playTitleBgm();
+  };
 
   /* ---- 背景 ---- */
   let bgTimer = null;
@@ -263,6 +266,7 @@
 
   /* ---- 朱批动画 ---- */
   ui.playVerdict = function (text, cb) {
+    if (Game.audio && Game.audio.playVerdictSting) Game.audio.playVerdictSting();
     el.verdictChar.textContent = text || "准";
     el.verdict.classList.add("is-on");
     const dur = Game.state.settings.verdictSkippable ? 1200 : 2000;
