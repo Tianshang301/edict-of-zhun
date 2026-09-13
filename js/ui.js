@@ -34,6 +34,9 @@
     el.modalScroll = document.getElementById("modal-scroll");
     el.modalSave = document.getElementById("modal-save");
     el.modalDossier = document.getElementById("modal-dossier");
+    el.modalGallery = document.getElementById("modal-gallery");
+    el.galleryStats = document.getElementById("gallery-stats");
+    el.galleryList = document.getElementById("gallery-list");
   }
 
   /* ---- 工具 ---- */
@@ -326,6 +329,50 @@
   };
   ui.closeDossier = function () { el.modalDossier.classList.remove("is-open"); };
 
+  /* ---- 结局图鉴 ---- */
+  const GALLERY_ORDER = ["E_A1", "E_A2", "E_A3", "E_A4", "E_B", "E_C", "E_TRUE", "E_PHANTOM"];
+  ui.openGallery = function () {
+    const unlocked = Game.unlockedEndings();
+    const totalE = Object.keys(Game.endings).length;
+    const totalK = Object.keys(Game.knowledgeInfo).length;
+    el.galleryStats.textContent =
+      "第 " + Game.state.loop + " 周目 · 死亡 " + Game.state.deaths +
+      " · 情报 " + Game.state.knowledge.length + "/" + totalK +
+      " · 结局 " + unlocked.length + "/" + totalE;
+    el.galleryList.innerHTML = "";
+    GALLERY_ORDER.forEach(function (id) {
+      const e = Game.endings[id];
+      if (!e) return;
+      const open = unlocked.indexOf(id) > -1;
+      const card = document.createElement("div");
+      card.className = "gallery__card" + (open ? " gallery__card--open" : " gallery__card--locked");
+      const badge = document.createElement("div");
+      badge.className = "gallery__badge gallery__badge--" + e.type;
+      badge.textContent = open ? e.label : "？";
+      card.appendChild(badge);
+      const title = document.createElement("div");
+      title.className = "gallery__title";
+      title.textContent = open ? e.title : "？？？";
+      card.appendChild(title);
+      if (open && e.cg) {
+        const img = document.createElement("img");
+        img.className = "gallery__cg";
+        img.src = resolvePic(e.cg);
+        img.alt = "";
+        card.appendChild(img);
+      }
+      if (open && e.hint) {
+        const hint = document.createElement("div");
+        hint.className = "gallery__hint";
+        hint.textContent = e.hint;
+        card.appendChild(hint);
+      }
+      el.galleryList.appendChild(card);
+    });
+    el.modalGallery.classList.add("is-open");
+  };
+  ui.closeGallery = function () { el.modalGallery.classList.remove("is-open"); };
+
   /* ---- 存档 ---- */
   ui.openSave = function (mode) { renderSlots(mode || "save"); el.modalSave.classList.add("is-open"); };
   ui.closeSave = function () { el.modalSave.classList.remove("is-open"); };
@@ -381,7 +428,10 @@
     const load = document.createElement("button");
     load.className = "btn btn--ghost"; load.textContent = "读档";
     load.onclick = function () { ui.openSave("load"); };
-    menu.appendChild(start); menu.appendChild(cont); menu.appendChild(load);
+    const gallery = document.createElement("button");
+    gallery.className = "btn btn--ghost"; gallery.textContent = "图鉴";
+    gallery.onclick = function () { ui.openGallery(); };
+    menu.appendChild(start); menu.appendChild(cont); menu.appendChild(load); menu.appendChild(gallery);
   }
   function flash(btn, msg) {
     const o = btn.textContent; btn.textContent = msg;
@@ -400,6 +450,7 @@
         if (el.modalScroll.classList.contains("is-open")) ui.closeScroll();
         else if (el.modalSave.classList.contains("is-open")) ui.closeSave();
         else if (el.modalDossier.classList.contains("is-open")) ui.closeDossier();
+        else if (el.modalGallery.classList.contains("is-open")) ui.closeGallery();
       } else if (e.key === " " || e.key === "Enter") {
         if (el.screenGame.classList.contains("is-active")) {
           e.preventDefault(); onAdvanceClick();

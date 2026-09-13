@@ -54,6 +54,32 @@
 .dossier__item:last-child { border-bottom: none; }
 .dossier__none { color: #555; font-style: italic; }
 
+/* 结局图鉴 */
+.gallery__stats {
+  color: var(--c-bone-d); font-size: .9rem; letter-spacing: .06em;
+  padding-bottom: .8rem; margin-bottom: 1rem;
+  border-bottom: 1px dashed rgba(176,141,62,.25);
+}
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .9rem; }
+.gallery__card {
+  display: flex; flex-direction: column; gap: .5rem;
+  padding: .9rem; background: rgba(255,255,255,.03);
+  border: 1px solid rgba(176,141,62,.25); border-radius: var(--r);
+}
+.gallery__card--locked { opacity: .5; }
+.gallery__card--open { border-color: rgba(176,141,62,.45); }
+.gallery__badge {
+  align-self: flex-start; font-family: var(--font-kai); font-size: .72rem; letter-spacing: .2em;
+  padding: .1rem .5rem; border: 1px solid currentColor;
+}
+.gallery__badge--bad { color: var(--c-blood-l); }
+.gallery__badge--normal { color: #8fb8b0; }
+.gallery__badge--good { color: var(--c-gold); }
+.gallery__badge--true { color: var(--c-bone); }
+.gallery__title { font-family: var(--font-kai); color: var(--c-bone); font-size: 1rem; letter-spacing: .08em; line-height: 1.5; }
+.gallery__cg { width: 100%; height: 150px; object-fit: cover; border: 1px solid rgba(176,141,62,.25); }
+.gallery__hint { font-size: .78rem; color: var(--c-gold-d); line-height: 1.7; }
+
 /* 通用按钮 */
 .btn {
   font-family: var(--font-kai); color: var(--c-bone); letter-spacing: .12em;
