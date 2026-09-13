@@ -211,6 +211,14 @@
 
   /* ---- 内容就绪与推进 ---- */
   let ready = false;
+  /* 对白框与选项列自适应对齐：按选项列实际高度精确抬升，保证任何选项数/屏幕都不重叠 */
+  function layoutDialogue() {
+    const hasChoices = el.choices && el.choices.children.length > 0;
+    if (!hasChoices) { el.dialogue.style.bottom = ""; return; }
+    const vh = el.screenGame.clientHeight || window.innerHeight || 600;
+    const bottom = vh * 0.06 + el.choices.offsetHeight + 14;
+    el.dialogue.style.bottom = bottom + "px";
+  }
   function contentReady() {
     ready = true;
     const node = Game.currentNode();
@@ -218,6 +226,7 @@
     const hasChoices = node.choices && node.choices.length;
     if (hasChoices) {
       renderChoices(node.choices);
+      layoutDialogue();
       return;
     }
     if (node.autoDelay != null) {
@@ -231,6 +240,7 @@
   ui.renderNode = function (node) {
     ready = false;
     el.choices.innerHTML = "";
+    el.dialogue.style.bottom = "";
     el.dHint.textContent = "";
     el.dChapter.textContent = node.chapter || "";
     el.screenGame.classList.toggle("has-choices", !!(node.choices && node.choices.length));
@@ -491,6 +501,9 @@
         if (el.screenGame.classList.contains("is-active")) ui.openScroll();
       }
     });
+
+    /* 窗口尺寸变化时重算对白框抬升，保持与选项列贴合 */
+    window.addEventListener("resize", layoutDialogue);
 
     let lastChapter = undefined;
     Game.subscribe("node:enter", function (node) {

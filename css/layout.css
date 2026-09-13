@@ -49,6 +49,7 @@
 /* 对白层 */
 .dialogue {
   position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%);
+  transition: bottom .4s ease;
   width: min(880px, 92%);
   z-index: var(--z-dialogue);
   background: linear-gradient(to top, rgba(8,7,5,.96), rgba(12,10,8,.86));
@@ -73,8 +74,8 @@
 .dialogue__caret { display: inline-block; width: .5em; color: var(--c-gold); animation: caret-blink 1s steps(1) infinite; }
 .dialogue__hint { margin-top: .6rem; font-size: .78rem; color: var(--c-gold-d); text-align: right; opacity: .7; }
 
-/* 有选项时：抬高对白框，选项在其下方显示 */
-#screen-game.has-choices .dialogue { bottom: 28%; transition: bottom .4s ease; }
+/* 有选项时：旁白略上移，给底部选项列让位（对白框抬升由 JS 按选项实际高度精确控制） */
+#screen-game.has-choices .narration { top: 46%; }
 
 /* 旁白（无对白框） */
 .narration {
@@ -88,9 +89,12 @@
 
 /* 选项 */
 .choices {
-  position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: max(6%, env(safe-area-inset-bottom)); transform: translateX(-50%);
   width: min(880px, 92%); z-index: var(--z-dialogue);
   display: flex; flex-direction: column; gap: .6rem;
+  max-height: 42%; overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: rgba(176,141,62,.4) transparent;
 }
 
 /* HUD */
