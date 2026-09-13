@@ -97,7 +97,7 @@
       setTimeout(function () {
         const imgs = el.bgLayer.querySelectorAll("img");
         for (let i = 0; i < imgs.length - 1; i++) imgs[i].remove();
-      }, 900);
+      }, Game.consts.BG_SWAP_CLEANUP);
     };
     fresh.onerror = function () { fresh.remove(); };
   };
@@ -305,7 +305,7 @@
     setTimeout(function () {
       el.dissolve.classList.remove("is-on");
       if (cb) cb();
-    }, 2400);
+    }, Game.consts.DISSOLVE_MS);
   };
 
   /* ---- 结局屏 ---- */
@@ -499,7 +499,7 @@
   }
   function flash(btn, msg) {
     const o = btn.textContent; btn.textContent = msg;
-    setTimeout(function () { btn.textContent = o; }, 1200);
+    setTimeout(function () { btn.textContent = o; }, Game.consts.FLASH_RESTORE_MS);
   }
 
   /* ---- 初始化 ---- */
@@ -534,7 +534,7 @@
       /* 章节（日）切换时闪墨晕转场（ui_transition_ink.webp 增强层） */
       if (node.chapter && lastChapter !== undefined && node.chapter !== lastChapter) {
         el.transition.classList.add("is-on");
-        setTimeout(function () { el.transition.classList.remove("is-on"); }, 650);
+        setTimeout(function () { el.transition.classList.remove("is-on"); }, Game.consts.TRANSITION_OFF_MS);
       }
       if (node.chapter) lastChapter = node.chapter;
       renderHUD();
@@ -542,7 +542,6 @@
     });
     Game.subscribe("state:change", renderHUD);
     Game.subscribe("ending:show", function (e) {
-      if (Game.state.settings.typewriter === undefined) {}
       ui.showEnding(e);
     });
     Game.subscribe("ending:finish", function () {

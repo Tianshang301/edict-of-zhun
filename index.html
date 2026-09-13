@@ -132,6 +132,8 @@
 
   </div>
 
+  <!-- 依赖顺序（勿乱序）：state → save → script-data → engine → audio → ui → main。
+       Game.audio / Game.consts 均依赖前序模块，封装内均有存在性守护，但顺序应保持稳定。 -->
   <script src="js/state.js"></script>
   <script src="js/save.js"></script>
   <script src="js/script-data.js"></script>

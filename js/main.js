@@ -11,7 +11,7 @@
     let asTimer = null;
     Game.subscribe("node:enter", function () {
       if (asTimer) clearTimeout(asTimer);
-      asTimer = setTimeout(function () { Game.save("auto"); }, 400);
+      asTimer = setTimeout(function () { Game.save("auto"); }, Game.consts.SAVE_DEBOUNCE);
     });
   }
 

@@ -17,7 +17,7 @@
     node.onEnter.forEach(function (eff) {
       if (eff.indexOf("knowledge:") === 0) Game.addKnowledge(eff.slice(10));
       else if (eff.indexOf("flag:") === 0) Game.setFlag(eff.slice(5));
-      else if (eff.indexOf("brush:") === 0) { if (!Game.state.hasBrushFragment) Game.state.hasBrushFragment = true; }
+      else if (eff.indexOf("brush:") === 0) Game.grantBrushFragment();
     });
   }
 
@@ -191,10 +191,10 @@
   Game.useBrushFragment = function () {
     if (!Game.canUseBrushFragment()) return;
     const nodeId = Game.state.nodeId;
-    Game.state.hasBrushFragment = false;
-    if (Game.state.rollbackUsedAt.indexOf(nodeId) < 0) Game.state.rollbackUsedAt.push(nodeId);
+    Game.revokeBrushFragment();
+    Game.markEchoBurned(nodeId);
     Game.resetForChapterRollback();                 /* 保留知识 / 残片状态，清 flag / 好感 */
-    Game.state.affinity.tianshang = (Game.state.affinity.tianshang || 0) - 3;
+    Game.adjustAffinity({ tianshang: -3 });
     Game.go(nodeId);
   };
 
