@@ -1,0 +1,10 @@
+{
+  "name": "edict-of-zhun",
+  "version": "1.0.0",
+  "private": true,
+  "description": "天殇·第二纪元 — 规则怪谈东方宫廷叙事游戏",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node tests/run-tests.js"
+  }
+}
