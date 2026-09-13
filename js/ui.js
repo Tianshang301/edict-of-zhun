@@ -58,7 +58,11 @@
       .replace(/\{\{loop2:([\s\S]*?)\}\}/g, function (_, t) { return Game.state.loop >= 2 ? t : ""; })
       .replace(/\{\{loop3:([\s\S]*?)\}\}/g, function (_, t) { return Game.state.loop >= 3 ? t : ""; })
       .replace(/\{\{loop4:([\s\S]*?)\}\}/g, function (_, t) { return Game.state.loop >= 4 ? t : ""; })
-      .replace(/\{\{loop\}\}/g, String(Game.state.loop));
+      .replace(/\{\{loop\}\}/g, String(Game.state.loop))
+      .replace(/\{\{aff([TASL])(\d+):([\s\S]*?)\}\}/g, function (_, c, n, t) {
+        const key = { T: "tianshang", A: "atan", S: "shentan", L: "lisi" }[c];
+        return (Game.state.affinity[key] || 0) >= (+n) ? t : "";
+      });
   }
 
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -313,9 +317,31 @@
   ui.closeScroll = function () { el.modalScroll.classList.remove("is-open"); };
 
   /* ---- 情报 ---- */
+  const AFF_LEVELS = {
+    tianshang: [[-99, "畏"], [-1, "疏"], [0, "如常"], [1, "近"], [2, "信"]],
+    atan:      [[-99, "疏"], [-1, "淡"], [0, "如常"], [1, "悦"], [2, "亲"]],
+    shentan:   [[0, "未明"], [1, "得见"], [2, "旧识"]],
+    lisi:      [[0, "同僚"], [1, "同病"]]
+  };
+  function affWord(ch) {
+    const v = Game.state.affinity[ch] || 0;
+    const lv = AFF_LEVELS[ch] || [];
+    let w = "？";
+    for (let i = 0; i < lv.length; i++) {
+      if (v >= lv[i][0]) w = lv[i][1]; else break;
+    }
+    return w;
+  }
   ui.openDossier = function () {
     const list = document.getElementById("dossier-list");
     list.innerHTML = "";
+    const aff = document.createElement("div");
+    aff.className = "dossier__aff";
+    aff.textContent = "好感 · 天殇 " + affWord("tianshang") +
+      " · 阿檀 " + affWord("atan") +
+      " · 沈砚 " + affWord("shentan") +
+      " · 李司农 " + affWord("lisi");
+    list.appendChild(aff);
     if (!Game.state.knowledge.length) {
       const li = document.createElement("div");
       li.className = "dossier__none";

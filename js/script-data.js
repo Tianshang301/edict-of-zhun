@@ -30,6 +30,8 @@
     k_truth:                "天子并非执笔之人。他，也是被写在卷宗上的那一行。",
     k_loop_count:           "这已是第若干次元年。卷宗在数。",
     k_quzhun:               "欲破此局，须令天子口出「不准」二字。",
+    k_atan_age:             "阿檀比天殇更早。她数着每一位第五位。",
+    k_emperor_tired:        "天子不是冷漠。他是被耗尽了。",
     fifth_line_is_you:      "第五行，可以是你。"
   };
 
@@ -54,7 +56,7 @@
       speaker: "天殇",
       line: "新来的第五位。\n岁凶民饥，何以处之？",
       choices: [
-        { text: "复旧制：与民休息。", kind: "echo", next: "scene_01_safe" },
+        { text: "复旧制：与民休息。", kind: "echo", affinity: { tianshang: +1 }, next: "scene_01_safe" },
         { text: "请设常平新法，平抑粮价。", kind: "propose", verdictText: "准", ending: "E_A1", danger: true },
         { text: "（伏地不语。）", kind: "silence", affinity: { tianshang: -1, atan: +1 }, next: "scene_01_sil" }
       ]
@@ -118,9 +120,9 @@
       portrait: { right: "chara_tianshang_calm.png" },
       speaker: "天殇", line: "北境大旱。卿等，有何言？",
       choices: [
-        { text: "「臣附议李司农。」", kind: "echo", next: "scene_02_03" },
+        { text: "「臣附议李司农。」", kind: "echo", affinity: { tianshang: +1 }, next: "scene_02_03" },
         { text: "「臣以为，当开仓赈济。」", kind: "propose", verdictText: "准", ending: "E_A2", danger: true },
-        { text: "「臣以为，休养生息即可。」", kind: "echo", next: "scene_02_02" },
+        { text: "「臣以为，休养生息即可。」", kind: "echo", affinity: { tianshang: +1 }, next: "scene_02_02" },
         { text: "（沉默）", kind: "silence", affinity: { tianshang: -1, atan: +1 }, next: "scene_02_02" }
       ]
     },
@@ -194,8 +196,8 @@
         "第三行，是空的。"
       ],
       choices: [
-        { text: "查看李司农的官邸", kind: "investigate", next: "scene_02_07" },
-        { text: "翻看卷宗的夹层", kind: "investigate", next: "scene_02_08" },
+        { text: "查看李司农的官邸", kind: "investigate", affinity: { lisi: +1 }, next: "scene_02_07" },
+        { text: "翻看卷宗的夹层", kind: "investigate", affinity: { atan: +1 }, next: "scene_02_08" },
         { text: "直接休息", kind: "silence", next: "scene_02_10" }
       ]
     },
@@ -232,13 +234,15 @@
       narration: [
         "你回到馆驿时，她坐在你的位置上。",
         "抱着那卷卷宗。脚不沾地。",
-        "她抬头看你，金色瞳孔里没有倒影。"
+        "她抬头看你，金色瞳孔里没有倒影。",
+        "{{affA2:她的语气，松了一点。}}"
       ],
       onEnter: ["knowledge:k_atan_noshadow"],
       speaker: "阿檀", line: "你看见了。",
       choices: [
-        { text: "「你是谁？」", kind: "ask", next: "scene_02_09a" },
-        { text: "「你也记得李司农？」", kind: "ask", next: "scene_02_09b" },
+        { text: "「你是谁？」", kind: "ask", affinity: { atan: +1 }, next: "scene_02_09a" },
+        { text: "「你也记得李司农？」", kind: "ask", affinity: { atan: +1 }, next: "scene_02_09b" },
+        { text: "「你在这里多久了？」", kind: "ask", require: "state.affinity.atan >= 2", hideIfLocked: true, affinity: { atan: +1 }, next: "scene_02_09e" },
         { text: "（沉默）", kind: "silence", affinity: { atan: -1 }, next: "scene_02_10" },
         { text: "「第五行，可以是我吗？」", kind: "ask", require: "state.loop >= 4", hideIfLocked: true, next: "scene_02_09d" }
       ]
@@ -263,6 +267,15 @@
       id: "scene_02_09d", chapter: "第二日 · 北境大旱",
       speaker: "阿檀", line: "……第五行，可以是我吗？",
       onEnter: ["knowledge:fifth_line_is_you"], next: "scene_02_09c"
+    },
+    scene_02_09e: {
+      id: "scene_02_09e", chapter: "第二日 · 北境大旱",
+      bg: "bg_inn_night.jpg", dark: true,
+      portrait: { center: "chara_atan_neutral.png" },
+      onEnter: ["knowledge:k_atan_age"],
+      speaker: "阿檀",
+      line: "比那位陛下，更久。我数着每一位第五位。——你，是第几个，我就不说了。",
+      next: "scene_02_09c"
     },
     scene_02_10: {
       id: "scene_02_10", chapter: "第二日 · 北境大旱",
@@ -296,7 +309,7 @@
       portrait: { right: "chara_tianshang_calm.png", rightFx: "tired" },
       speaker: "天殇", line: "第三问。吏治积弊，何以清之？",
       choices: [
-        { text: "复旧制：考成法。", kind: "echo", next: "scene_03_safe" },
+        { text: "复旧制：考成法。", kind: "echo", affinity: { tianshang: +1 }, next: "scene_03_safe" },
         { text: "请立考课新法，澄汰冗员。", kind: "propose", verdictText: "准", ending: "E_A3", danger: true },
         { text: "（伏地不语。）", kind: "silence", affinity: { tianshang: -1, atan: +1 }, next: "scene_03_sil" }
       ]
@@ -351,7 +364,12 @@
     scene_04_01: {
       id: "scene_04_01", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
-      narration: ["第四日。", "殿上只剩四人——你、沈砚、阿檀，与天子。", "天子没有问。他在等你问。"],
+      narration: [
+        "第四日。",
+        "殿上只剩四人——你、沈砚、阿檀，与天子。",
+        "天子没有问。他在等你问。",
+        "{{affT2:他看了你一眼。只有一眼。}}"
+      ],
       next: "scene_04_02"
     },
     scene_04_02: {
@@ -360,9 +378,10 @@
       portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking", left: "chara_atan_neutral.png" },
       speaker: "天殇", line: "第四问。……你，还想问什么？",
       choices: [
-        { text: "复旧制：休养生息。", kind: "echo", next: "scene_04_safe" },
+        { text: "复旧制：休养生息。", kind: "echo", affinity: { tianshang: +1 }, next: "scene_04_safe" },
         { text: "请……请立新制。", kind: "propose", verdictText: "准", ending: "E_A4", danger: true },
         { text: "（伏地不语。）", kind: "silence", affinity: { tianshang: -1, atan: +1 }, next: "scene_04_sil" },
+        { text: "陛下，您……累了吗？", kind: "ask", require: "state.affinity.tianshang >= 2", hideIfLocked: true, affinity: { tianshang: +1 }, next: "scene_04_ask_tired" },
         { text: "陛下，这卷宗，可是您写的？", kind: "ask", require: "flags.knows_truth === true", next: "scene_04_ask" },
         { text: "（真相）臣要续写卷宗第一行。", kind: "meta", require: "state.loop >= 2 && Game.hasKnowledge('k_throne_back')", hideIfLocked: true, next: "scene_04_secondera" }
       ]
@@ -374,13 +393,22 @@
       speaker: "天殇", line: "……你想问，这卷宗是谁写的。朕写的。——不。朕，也是被写的。",
       next: "scene_04_ask2"
     },
+    scene_04_ask_tired: {
+      id: "scene_04_ask_tired", chapter: "第四日 · 破局",
+      bg: "bg_throne_hall.jpg",
+      portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking" },
+      onEnter: ["knowledge:k_emperor_tired"],
+      speaker: "天殇",
+      line: "……朕累。可朕不能停。朕一停，卷宗就要把朕写掉了。——你……别再问了。",
+      next: "scene_04_ask2"
+    },
     scene_04_ask2: {
       id: "scene_04_ask2", chapter: "第四日 · 破局",
       bg: "bg_throne_hall.jpg",
       portrait: { right: "chara_tianshang_calm.png", rightFx: "breaking", left: "chara_atan_neutral.png" },
       speaker: "天殇", line: "朕说不出『不准』。那是枷锁，也是钥匙。——你，要试吗？",
       choices: [
-        { text: "臣请陛下，说『不准』。", kind: "meta", require: "Game.hasKnowledge('k_throne_back') === true", next: "scene_04_truth" },
+        { text: "臣请陛下，说『不准』。", kind: "meta", require: "flags.knows_truth === true && Game.hasKnowledge('k_throne_back') === true", next: "scene_04_truth" },
         { text: "（退回）复旧制：休养生息。", kind: "echo", next: "scene_04_safe" }
       ]
     },
